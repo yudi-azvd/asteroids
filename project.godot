@@ -22,10 +22,17 @@ _global_script_class_icons={
 
 config/name="Asteroids"
 run/main_scene="res://game/main.tscn"
+config/icon="res://logo.png"
+config/macos_native_icon="res://logo.png"
+config/windows_native_icon="res://logo.png"
 
 [display]
 
 window/size/fullscreen=true
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/godot-quick-find/plugin.cfg" )
 
 [gdnative]
 

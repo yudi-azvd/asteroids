@@ -3,6 +3,8 @@
 export.cfg
 export_presets.cfg
 
+builds/
+
 logs
 log
 
