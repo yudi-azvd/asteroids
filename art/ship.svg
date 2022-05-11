@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (08b2f3d93c, 2022-04-05)"
+   sodipodi:docname="ship.svg"
+   inkscape:export-filename="/home/yudi/Documents/1-projetos/programming/games/asteroids/art/ship.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#000000"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="true"
+     inkscape:document-units="mm"
+     showgrid="true"
+     inkscape:zoom="2"
+     inkscape:cx="375"
+     inkscape:cy="714.00001"
+     inkscape:window-width="1366"
+     inkscape:window-height="731"
+     inkscape:window-x="1024"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g883-3">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2082"
+       spacingx="0.52916667"
+       spacingy="0.52916667" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g883"
+       transform="rotate(-2.295703,879.77081,997.83865)"
+       inkscape:export-filename="/home/yudi/Documents/1-projetos/programming/games/asteroids/assets/img/ship-1.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <path
+         style="fill:none;stroke:#ffffff;stroke-width:1.32292;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 112.88676,145.86808 -14.384367,28.55089 13.430517,-4.7575 13.00658,5.81734 z"
+         id="path5672-1"
+         sodipodi:nodetypes="ccccc" />
+      <path
+         style="fill:none;stroke:#ffffff;stroke-width:1.32292;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 106.53951,172.09321 5.07545,5.49939 5.49939,-5.07545 -5.18144,-2.85568 z"
+         id="path6809"
+         sodipodi:nodetypes="ccccc" />
+    </g>
+    <g
+       id="g883-3"
+       transform="rotate(-2.295703,895.64572,205.53348)"
+       inkscape:export-filename="/home/yudi/Documents/1-projetos/programming/games/asteroids/assets/img/ship-1.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <path
+         style="fill:none;stroke:#ffffff;stroke-width:1.32292;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 112.88676,145.86808 -14.384367,28.55089 13.430517,-4.7575 13.00658,5.81734 z"
+         id="path5672-1-6"
+         sodipodi:nodetypes="ccccc" />
+      <path
+         style="fill:none;stroke:none;stroke-width:1.32292;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 106.53951,172.09321 5.07545,5.49939 5.49939,-5.07545 -5.18144,-2.85568 z"
+         id="path6809-7"
+         sodipodi:nodetypes="ccccc" />
+    </g>
+  </g>
+</svg>
