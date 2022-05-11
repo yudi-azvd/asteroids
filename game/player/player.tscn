@@ -21,6 +21,7 @@ animations = [ {
 script = ExtResource( 3 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 1 )
 animation = "idle"
 
@@ -28,9 +29,17 @@ animation = "idle"
 polygon = PoolVector2Array( 55, 58, 0, -61, -55, 58 )
 
 [node name="Direction" type="Label" parent="."]
-margin_left = -53.0
-margin_top = 66.0
-margin_right = 53.0
-margin_bottom = 80.0
+margin_left = -27.0
+margin_top = -106.0
+margin_right = 79.0
+margin_bottom = -92.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
-text = "Olá"
+text = "Direction"
+
+[node name="Speed" type="Label" parent="."]
+margin_left = -19.0
+margin_top = 82.0
+margin_right = 87.0
+margin_bottom = 96.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Speed"
