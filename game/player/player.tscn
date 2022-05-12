@@ -23,7 +23,7 @@ script = ExtResource( 3 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-animation = "idle"
+animation = "moving"
 playing = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
@@ -38,12 +38,11 @@ margin_bottom = -92.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Direction"
 
-[node name="Speed" type="Label" parent="."]
-visible = false
-margin_left = -19.0
-margin_top = 82.0
-margin_right = 87.0
-margin_bottom = 96.0
+[node name="Velocity" type="Label" parent="."]
+margin_left = -16.0
+margin_top = 39.0
+margin_right = 90.0
+margin_bottom = 53.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Speed"
 

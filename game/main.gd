@@ -1,6 +1,4 @@
 extends Node
 
-
-func _process(_delta):
-	if Input.is_action_pressed("reset_position"):
-		$Player.position = $Initial.position
+onready var window_height = get_viewport().size.y
+onready var window_width = get_viewport().size.x
