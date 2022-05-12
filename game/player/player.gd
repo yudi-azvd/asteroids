@@ -62,8 +62,8 @@ func shoot():
 	new_bullet.show()
 	add_child(new_bullet)
 		
-func _draw():
-	var from = Vector2.ZERO
-	var corrected_dir = direction.rotated(0)*25
-#	draw_line(from, velocity, Color.red, 3)
-#	draw_line(from, corrected_dir, Color.yellow, 3)
+# func _draw():
+# 	var from = Vector2.ZERO
+# 	var corrected_dir = direction.rotated(0)*25
+# 	draw_line(from, velocity, Color.red, 3)
+# 	draw_line(from, corrected_dir, Color.yellow, 3)
