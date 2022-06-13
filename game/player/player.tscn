@@ -46,4 +46,15 @@ margin_bottom = 53.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Speed"
 
+[node name="LifePoints" type="Label" parent="."]
+margin_left = 34.0
+margin_top = -15.0
+margin_right = 140.0
+margin_bottom = -1.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Life Points"
+
 [node name="Bullet" parent="." instance=ExtResource( 4 )]
+linear_damp = 0.0
+
+[connection signal="area_entered" from="." to="." method="_on_Player_area_entered"]

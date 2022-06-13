@@ -1,10 +1,8 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://game/player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://game/main.gd" type="Script" id=2]
-[ext_resource path="res://game/asteroids/asteroid_small.tscn" type="PackedScene" id=3]
-[ext_resource path="res://game/asteroids/asteroid_medium.tscn" type="PackedScene" id=4]
-[ext_resource path="res://game/asteroids/asteroid_big.tscn" type="PackedScene" id=5]
+[ext_resource path="res://game/asteroids/AsteroidSpawner.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 564, 14.5 )
@@ -17,6 +15,11 @@ extents = Vector2( 16, 348.5 )
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 13.5, 352.5 )
+
+[sub_resource type="Curve2D" id=5]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 1023, 1, 0, 0, 0, 0, 1023, 599, 0, 0, 0, 0, 1, 599, 0, 0, 0, 0, 3, 3 )
+}
 
 [node name="Main" type="Node"]
 script = ExtResource( 2 )
@@ -31,15 +34,6 @@ position = Vector2( 532, 316 )
 
 [node name="Initial" type="Position2D" parent="."]
 position = Vector2( 532, 319 )
-
-[node name="AsteroidBig" parent="." instance=ExtResource( 5 )]
-position = Vector2( -144, 6 )
-
-[node name="AsteroidMedium" parent="." instance=ExtResource( 4 )]
-position = Vector2( -160, 224 )
-
-[node name="AsteroidSmall" parent="." instance=ExtResource( 3 )]
-position = Vector2( -158, 122 )
 
 [node name="LimitTop" type="Area2D" parent="."]
 position = Vector2( 288, -25 )
@@ -87,3 +81,11 @@ color = Color( 1, 0, 0, 0.521569 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.054902, 1, 0, 0.521569 )
+
+[node name="AsteroidSpawner" type="Path2D" parent="."]
+curve = SubResource( 5 )
+script = ExtResource( 3 )
+
+[node name="AsteroidSpawnLocation" type="PathFollow2D" parent="AsteroidSpawner"]
+position = Vector2( 3, 3 )
+rotation = -0.00196075

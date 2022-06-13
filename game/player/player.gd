@@ -1,5 +1,9 @@
 extends Area2D
 
+onready var window_height = get_viewport().size.y
+onready var window_width = get_viewport().size.x
+
+var life_points := 3
 var speed := 300
 var velocity := Vector2.ZERO
 var direction := Vector2.UP
@@ -7,14 +11,16 @@ var angular_speed := deg2rad(200)
 var bullet_timer = 0
 var Bullet = preload("res://game/player/bullet.tscn")
 const MAX_VELOCITY = 400
-onready var window_height = get_viewport().size.y
-onready var window_width = get_viewport().size.x
-
-
 
 func _ready():
 	$Bullet.hide()
-
+	$Bullet.collision_layer = 2
+	$Bullet.collision_mask = 2
+	update_life_points()
+	
+func update_life_points():
+	$LifePoints.text = str(life_points)
+	
 func _process(delta):
 	bullet_timer += delta
 	if Input.is_action_pressed("rotate_left"):
@@ -56,6 +62,8 @@ func shoot():
 	bullet_timer = 0
 	var new_bullet = Bullet.instance()
 	new_bullet.position = Vector2.ZERO
+	new_bullet.collision_layer = 1
+	new_bullet.collision_mask = 1
 	new_bullet.rotation = direction.rotated(PI/2).angle()
 	new_bullet.velocity = direction*4
 	new_bullet.can_move = true
@@ -67,3 +75,12 @@ func shoot():
 # 	var corrected_dir = direction.rotated(0)*25
 # 	draw_line(from, velocity, Color.red, 3)
 # 	draw_line(from, corrected_dir, Color.yellow, 3)
+
+func _on_Player_area_entered(area: Area2D):
+	if area is Asteroid:
+		print("PLAYER touched by " + area.name)
+		life_points -= 1
+		update_life_points()
+		if life_points == 0:
+			print('game over')
+			queue_free()
