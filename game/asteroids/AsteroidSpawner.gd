@@ -5,6 +5,7 @@ var _asteroid_spawn_interval_in_seconds = 2
 
 var AsteroidBig = preload("res://game/asteroids/asteroid_big.tscn")
 var AsteroidMedium = preload("res://game/asteroids/asteroid_medium.tscn")
+var AsteroidSmall = preload("res://game/asteroids/asteroid_small.tscn")
 
 signal bullet_hit()
 
@@ -40,13 +41,24 @@ func spawn_asteroid_medium(position: Vector2, direction: Vector2):
 	asteroid.init(position, direction)
 	asteroid.speed *= 2
 	asteroid.connect("bullet_hit", self, '_on_bullet_hit_medium')
-
-func _on_bullet_hit_big(area: Area2D, asteroid_hit: Asteroid):
-	print(area.name + ' hit notification in spawner: ' + asteroid_hit.name)
+	
+func spawn_asteroid_small(position: Vector2, direction: Vector2):
+	var asteroid = AsteroidSmall.instance()
+	# https://stackoverflow.com/questions/63206231/godot-3-2-1-cant-change-this-state-while-flushing-queries-use-call-deferred
+	self.call_deferred('add_child', asteroid)
+	asteroid.init(position, direction)
+	asteroid.speed *= 2
+	asteroid.connect('bullet_hit', self, "_on_bullet_hit_small")
+	
+func _on_bullet_hit_big(_area: Area2D, asteroid_hit: Asteroid):
+#	print(area.name + ' hit notification in spawner: ' + asteroid_hit.name)
 	spawn_asteroid_medium(asteroid_hit.position, asteroid_hit.direction)
 	asteroid_hit.queue_free()
 	
-func _on_bullet_hit_medium(area: Area2D, asteroid_hit: Asteroid):
-	print(area.name + ' hit notification in spawner: ' + asteroid_hit.name)
+func _on_bullet_hit_medium(_area: Area2D, asteroid_hit: Asteroid):
+#	print(area.name + ' hit notification in spawner: ' + asteroid_hit.name)
+	spawn_asteroid_small(asteroid_hit.position, asteroid_hit.direction)
 	asteroid_hit.queue_free()
 	
+func _on_bullet_hit_small(_area: Area2D, asteroid_hit: Asteroid):
+	asteroid_hit.queue_free()
