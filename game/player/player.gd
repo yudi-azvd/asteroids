@@ -2,6 +2,9 @@ extends Area2D
 
 onready var window_height = get_viewport().size.y
 onready var window_width = get_viewport().size.x
+onready var shoot_sound: AudioStreamPlayer2D = $SFXShoot
+onready var loose_sound: AudioStreamPlayer2D = $SFXLoose
+onready var hit_sound: AudioStreamPlayer2D = $SFXHit
 
 signal player_died
 
@@ -62,6 +65,7 @@ func teletransport_if_on_edge():
 		position.y = window_height
 
 func shoot():
+	shoot_sound.play()
 	bullet_timer = 0
 	var new_bullet = Bullet.instance()
 	new_bullet.position = Vector2.ZERO
@@ -81,9 +85,14 @@ func shoot():
 
 func _on_Player_area_entered(area: Area2D):
 	if area is Asteroid:
-		print("PLAYER touched by " + area.name)
+#		print("PLAYER touched by " + area.name)
 		life_points -= 1
+		hit_sound.play()
 		update_life_points()
 		if life_points == 0:
+			hide()
+			velocity = Vector2.ZERO
+			loose_sound.play()
 			emit_signal('player_died')
+			yield(loose_sound, "finished")
 			queue_free()
