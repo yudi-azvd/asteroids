@@ -3,6 +3,8 @@ extends Area2D
 onready var window_height = get_viewport().size.y
 onready var window_width = get_viewport().size.x
 
+signal player_died
+
 var life_points := 3
 var speed := 300
 var velocity := Vector2.ZERO
@@ -13,6 +15,7 @@ var Bullet = preload("res://game/player/bullet.tscn")
 const MAX_VELOCITY = 400
 
 func _ready():
+	connect('player_died', get_parent(), 'on_Player_died')
 	$Bullet.hide()
 	$Bullet.collision_layer = 2
 	$Bullet.collision_mask = 2
@@ -82,5 +85,5 @@ func _on_Player_area_entered(area: Area2D):
 		life_points -= 1
 		update_life_points()
 		if life_points == 0:
-			print('game over')
+			emit_signal('player_died')
 			queue_free()

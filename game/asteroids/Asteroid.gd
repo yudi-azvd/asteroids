@@ -8,6 +8,7 @@ onready var asteroid_spawner = get_node("../../AsteroidSpawner")
 
 signal bullet_hit
 
+var limit_touch_count := 0
 var speed = 50
 var direction = Vector2.UP
 
@@ -20,6 +21,7 @@ func _process(delta):
 	
 func init(position: Vector2, direction_: Vector2):
 	connect("area_entered", self, '_on_area_entered')
+	rotation = randf() * 2 * PI
 	global_position = position
 	direction = direction_
 	linear_damp = 0
@@ -37,6 +39,11 @@ func teleport_if_on_edge():
 	
 func _on_area_entered(area: Area2D):
 	if area.name.to_lower().find('bullet') > 0:
-		print(area.name + ' entered ' + name + ' !')
+#		print(area.name + ' entered ' + name + ' !')
 		emit_signal("bullet_hit", area, self)
-		
+	
+	if area.name.begins_with("Limit"):
+		limit_touch_count += 1
+		print('Touched wall ' + area.name)
+		if limit_touch_count > 1:
+			queue_free()

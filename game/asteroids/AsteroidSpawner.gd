@@ -1,11 +1,12 @@
 extends Node
 
 var asteroid_spawn_timer = 0
-var _asteroid_spawn_interval_in_seconds = 2
+var _asteroid_spawn_interval_in_seconds := 2
 
 var AsteroidBig = preload("res://game/asteroids/asteroid_big.tscn")
 var AsteroidMedium = preload("res://game/asteroids/asteroid_medium.tscn")
 var AsteroidSmall = preload("res://game/asteroids/asteroid_small.tscn")
+onready var explosion_sound: AudioStreamPlayer = $SFXExplosion
 
 signal bullet_hit()
 
@@ -51,14 +52,19 @@ func spawn_asteroid_small(position: Vector2, direction: Vector2):
 	asteroid.connect('bullet_hit', self, "_on_bullet_hit_small")
 	
 func _on_bullet_hit_big(_area: Area2D, asteroid_hit: Asteroid):
+	explosion_sound.play()
 #	print(area.name + ' hit notification in spawner: ' + asteroid_hit.name)
+	spawn_asteroid_medium(asteroid_hit.position, asteroid_hit.direction.rotated(PI/9))
 	spawn_asteroid_medium(asteroid_hit.position, asteroid_hit.direction)
 	asteroid_hit.queue_free()
 	
 func _on_bullet_hit_medium(_area: Area2D, asteroid_hit: Asteroid):
+	explosion_sound.play()
 #	print(area.name + ' hit notification in spawner: ' + asteroid_hit.name)
+	spawn_asteroid_small(asteroid_hit.position, asteroid_hit.direction.rotated(PI/9))
 	spawn_asteroid_small(asteroid_hit.position, asteroid_hit.direction)
 	asteroid_hit.queue_free()
 	
 func _on_bullet_hit_small(_area: Area2D, asteroid_hit: Asteroid):
+	explosion_sound.play()
 	asteroid_hit.queue_free()
