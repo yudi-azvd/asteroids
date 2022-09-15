@@ -1,6 +1,6 @@
 # Asteroids
 
-_Ainda em desenvolvimento_
+![captura de tela asteroids](docs/screenshot.png)
 
 Godot 3.4.4
 
