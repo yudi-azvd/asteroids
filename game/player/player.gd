@@ -14,11 +14,11 @@ var velocity := Vector2.ZERO
 var direction := Vector2.UP
 var angular_speed := deg2rad(200)
 var bullet_timer = 0
-var Bullet = preload("res://game/player/bullet.tscn")
+var Bullet = preload('res://game/player/bullet.tscn')
 const MAX_VELOCITY = 400
 
 func _ready():
-	connect('player_died', get_parent(), 'on_Player_died')
+	# connect('player_died', get_parent(), 'on_Player_died')
 	$Bullet.hide()
 	$Bullet.collision_layer = 2
 	$Bullet.collision_mask = 2
@@ -29,21 +29,21 @@ func update_life_points():
 	
 func _process(delta):
 	bullet_timer += delta
-	if Input.is_action_pressed("rotate_left"):
+	if Input.is_action_pressed('rotate_left'):
 		direction = direction.rotated(-angular_speed*delta)
-	if Input.is_action_pressed("rotate_right"):
+	if Input.is_action_pressed('rotate_right'):
 		direction = direction.rotated(angular_speed*delta)
 
 	$AnimatedSprite.rotation = direction.rotated(PI/2).angle()
 	
-	if Input.is_action_pressed("accelerate"):
+	if Input.is_action_pressed('accelerate'):
 		if velocity.length() < MAX_VELOCITY or velocity.dot(direction) < -1:
 			velocity += direction*speed*delta
-			$AnimatedSprite.animation = "moving"
+			$AnimatedSprite.animation = 'moving'
 	else:
-		$AnimatedSprite.animation = "idle"
+		$AnimatedSprite.animation = 'idle'
 
-	if Input.is_action_pressed("shoot") and bullet_timer > 0.5:
+	if Input.is_action_pressed('shoot') and bullet_timer > 0.5:
 		shoot()
 	
 	position += velocity*delta
@@ -85,7 +85,7 @@ func shoot():
 
 func _on_Player_area_entered(area: Area2D):
 	if area is Asteroid:
-#		print("PLAYER touched by " + area.name)
+#		print('PLAYER touched by ' + area.name)
 		life_points -= 1
 		hit_sound.play()
 		update_life_points()
@@ -94,5 +94,5 @@ func _on_Player_area_entered(area: Area2D):
 			velocity = Vector2.ZERO
 			loose_sound.play()
 			emit_signal('player_died')
-			yield(loose_sound, "finished")
+			yield(loose_sound, 'finished')
 			queue_free()

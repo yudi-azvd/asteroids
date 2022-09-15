@@ -6,20 +6,20 @@
 [ext_resource path="res://assets/sfx/explosion_big.wav" type="AudioStream" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 564, 14.5 )
+extents = Vector2( 819, 28.3125 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 565.5, 14.5 )
+extents = Vector2( 820.5, 21 )
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 16, 348.5 )
+extents = Vector2( 41, 534.5 )
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 13.5, 352.5 )
+extents = Vector2( 33.75, 565 )
 
 [sub_resource type="Curve2D" id=5]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 1023, 1, 0, 0, 0, 0, 1023, 599, 0, 0, 0, 0, 1, 599, 0, 0, 0, 0, 3, 3 )
+"points": PoolVector2Array( 0, 0, 0, 0, -82.1979, -106.002, 0, 0, 0, 0, 1080.36, -79.2513, 0, 0, 0, 0, 1071.76, 691.557, 0, 0, 0, 0, -102.275, 697.502, 0, 0, 0, 0, -83.154, -106.002, 0, 0, 0, 0, -82.1979, -106.002 )
 }
 
 [node name="Main" type="Node"]
@@ -40,56 +40,40 @@ position = Vector2( 532, 319 )
 position = Vector2( 288, -25 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LimitTop"]
-position = Vector2( 226, -35 )
+position = Vector2( 248, -262.312 )
 shape = SubResource( 1 )
 
 [node name="LimitBottom" type="Area2D" parent="."]
 position = Vector2( 285, 621 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LimitBottom"]
-position = Vector2( 223.5, 31 )
+position = Vector2( 297.5, 179 )
 shape = SubResource( 2 )
-
-[node name="ColorRect" type="ColorRect" parent="LimitBottom"]
-margin_left = -338.0
-margin_top = 21.0
-margin_right = 790.0
-margin_bottom = 42.0
-color = Color( 1, 0, 0, 0.521569 )
 
 [node name="LimitLeft" type="Area2D" parent="."]
 position = Vector2( -300, 272 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LimitLeft"]
-position = Vector2( 242, 26.5 )
+position = Vector2( 39, -21.5 )
 shape = SubResource( 4 )
 
 [node name="LimitRight" type="Area2D" parent="."]
 position = Vector2( 1161, 318 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LimitRight"]
-position = Vector2( -84, -19 )
+position = Vector2( 190, -75 )
 shape = SubResource( 3 )
 
-[node name="ColorRect" type="ColorRect" parent="LimitRight/CollisionShape2D"]
-margin_left = -13.0
-margin_top = -340.0
-margin_right = 14.0
-margin_bottom = 353.0
-color = Color( 1, 0, 0, 0.521569 )
-
-[node name="ColorRect" type="ColorRect" parent="LimitRight"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color( 0.054902, 1, 0, 0.521569 )
-
 [node name="AsteroidSpawner" type="Path2D" parent="."]
+position = Vector2( 1.97655, -0.00933123 )
+scale = Vector2( 1.04597, 1.00933 )
 curve = SubResource( 5 )
 script = ExtResource( 3 )
 
 [node name="AsteroidSpawnLocation" type="PathFollow2D" parent="AsteroidSpawner"]
-position = Vector2( 3, 3 )
-rotation = -0.00196075
+position = Vector2( -49.6924, -63.3991 )
+rotation = 0.00269974
 
 [node name="SFXExplosion" type="AudioStreamPlayer" parent="AsteroidSpawner"]
 stream = ExtResource( 4 )
+volume_db = -9.851

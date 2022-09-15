@@ -3,17 +3,18 @@ extends Node
 var asteroid_spawn_timer = 0
 var _asteroid_spawn_interval_in_seconds := 2
 
-var AsteroidBig = preload("res://game/asteroids/asteroid_big.tscn")
-var AsteroidMedium = preload("res://game/asteroids/asteroid_medium.tscn")
-var AsteroidSmall = preload("res://game/asteroids/asteroid_small.tscn")
-onready var explosion_sound: AudioStreamPlayer = $SFXExplosion
+var AsteroidBig = preload("res://game/asteroids/AsteroidBig.tscn")
+var AsteroidMedium = preload("res://game/asteroids/AsteroidMedium.tscn")
+var AsteroidSmall = preload("res://game/asteroids/AsteroidSmall.tscn")
 
-signal bullet_hit()
+onready var explosion_sound: AudioStreamPlayer = $SFXExplosion
+onready var playerInitialPosition = get_node('../Initial')
+onready var asteroidSpawnLocation = $AsteroidSpawnLocation
+onready var initial = get_node('../Initial')
 
 func _ready():
 	randomize()
-	connect("bullet_hit", self, 'on_bullet_hit')
-	spawn_big_asteroid()
+	spawn_big_asteroid(false)
 
 func _process(delta):
 	asteroid_spawn_timer += delta
@@ -24,47 +25,37 @@ func _process(delta):
 	asteroid_spawn_timer = 0
 	spawn_big_asteroid()
 	
-func spawn_big_asteroid():
+func spawn_big_asteroid(has_direction_offset=true):
 	var asteroid = AsteroidBig.instance()
 	add_child(asteroid)
-	var asteroid_spawn_location = $AsteroidSpawnLocation
-	asteroid_spawn_location.offset = randi()
-	asteroid.position = asteroid_spawn_location.position
-	var direction_to_center = (get_node('../Initial').position - asteroid.position).normalized()
-	direction_to_center = direction_to_center.rotated(randf()*PI/6 - PI/4)
-	asteroid.init(asteroid_spawn_location.position, direction_to_center)
-	asteroid.connect("bullet_hit", self, '_on_bullet_hit_big')
+	asteroidSpawnLocation.offset = randi()
+	var direction_to_center = (get_node('../Initial').global_position - asteroidSpawnLocation.position).normalized()
+	if has_direction_offset:
+		direction_to_center = direction_to_center.rotated(randf()*PI/6 - PI/4)
+	asteroid.init(asteroidSpawnLocation.position, direction_to_center)
+	asteroid.connect('bullet_hit', self, '_on_bullet_hit')
+
+func _on_bullet_hit(asteroid_hit: Asteroid):
+	explosion_sound.play()
+	if asteroid_hit.name.find('Big') > 0:
+		spawn_asteroid_medium(asteroid_hit)
+		spawn_asteroid_medium(asteroid_hit)
 	
-func spawn_asteroid_medium(position: Vector2, direction: Vector2):
+	if asteroid_hit.name.find('Medium') > 0:
+		spawn_asteroid_small(asteroid_hit)
+		spawn_asteroid_small(asteroid_hit)
+		
+func spawn_asteroid_medium(asteroid_hit: Asteroid):
 	var asteroid = AsteroidMedium.instance()
 	# https://stackoverflow.com/questions/63206231/godot-3-2-1-cant-change-this-state-while-flushing-queries-use-call-deferred
 	self.call_deferred('add_child', asteroid)
-	asteroid.init(position, direction)
-	asteroid.speed *= 2
-	asteroid.connect("bullet_hit", self, '_on_bullet_hit_medium')
+	asteroid.init(asteroid_hit.position, asteroid_hit.direction.rotated(rand_range(-PI/4, PI/4)))
+	asteroid.speed *= 1.1
+	asteroid.connect('bullet_hit', self, '_on_bullet_hit')
 	
-func spawn_asteroid_small(position: Vector2, direction: Vector2):
+func spawn_asteroid_small(asteroid_hit: Asteroid):
 	var asteroid = AsteroidSmall.instance()
-	# https://stackoverflow.com/questions/63206231/godot-3-2-1-cant-change-this-state-while-flushing-queries-use-call-deferred
 	self.call_deferred('add_child', asteroid)
-	asteroid.init(position, direction)
-	asteroid.speed *= 2
-	asteroid.connect('bullet_hit', self, "_on_bullet_hit_small")
-	
-func _on_bullet_hit_big(_area: Area2D, asteroid_hit: Asteroid):
-	explosion_sound.play()
-#	print(area.name + ' hit notification in spawner: ' + asteroid_hit.name)
-	spawn_asteroid_medium(asteroid_hit.position, asteroid_hit.direction.rotated(PI/9))
-	spawn_asteroid_medium(asteroid_hit.position, asteroid_hit.direction)
-	asteroid_hit.queue_free()
-	
-func _on_bullet_hit_medium(_area: Area2D, asteroid_hit: Asteroid):
-	explosion_sound.play()
-#	print(area.name + ' hit notification in spawner: ' + asteroid_hit.name)
-	spawn_asteroid_small(asteroid_hit.position, asteroid_hit.direction.rotated(PI/9))
-	spawn_asteroid_small(asteroid_hit.position, asteroid_hit.direction)
-	asteroid_hit.queue_free()
-	
-func _on_bullet_hit_small(_area: Area2D, asteroid_hit: Asteroid):
-	explosion_sound.play()
-	asteroid_hit.queue_free()
+	asteroid.init(asteroid_hit.position, asteroid_hit.direction.rotated(rand_range(-PI/4, PI/4)))
+	asteroid.speed *= 1.2
+	asteroid.connect('bullet_hit', self, '_on_bullet_hit')
