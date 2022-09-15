@@ -38,24 +38,15 @@ func spawn_big_asteroid(has_direction_offset=true):
 func _on_bullet_hit(asteroid_hit: Asteroid):
 	explosion_sound.play()
 	if asteroid_hit.name.find('Big') > 0:
-		spawn_asteroid_medium(asteroid_hit)
-		spawn_asteroid_medium(asteroid_hit)
+		spawn_asteroid(AsteroidMedium.instance(), asteroid_hit)
+		spawn_asteroid(AsteroidMedium.instance(), asteroid_hit)
 	
 	if asteroid_hit.name.find('Medium') > 0:
-		spawn_asteroid_small(asteroid_hit)
-		spawn_asteroid_small(asteroid_hit)
-		
-func spawn_asteroid_medium(asteroid_hit: Asteroid):
-	var asteroid = AsteroidMedium.instance()
-	# https://stackoverflow.com/questions/63206231/godot-3-2-1-cant-change-this-state-while-flushing-queries-use-call-deferred
+		spawn_asteroid(AsteroidSmall.instance(), asteroid_hit)
+		spawn_asteroid(AsteroidSmall.instance(), asteroid_hit)
+
+func spawn_asteroid(asteroid: Asteroid, asteroid_hit: Asteroid):
 	self.call_deferred('add_child', asteroid)
 	asteroid.init(asteroid_hit.position, asteroid_hit.direction.rotated(rand_range(-PI/4, PI/4)))
 	asteroid.speed *= 1.1
-	asteroid.connect('bullet_hit', self, '_on_bullet_hit')
-	
-func spawn_asteroid_small(asteroid_hit: Asteroid):
-	var asteroid = AsteroidSmall.instance()
-	self.call_deferred('add_child', asteroid)
-	asteroid.init(asteroid_hit.position, asteroid_hit.direction.rotated(rand_range(-PI/4, PI/4)))
-	asteroid.speed *= 1.2
 	asteroid.connect('bullet_hit', self, '_on_bullet_hit')
