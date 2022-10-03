@@ -41,6 +41,9 @@ config/windows_native_icon="res://logo.png"
 [display]
 
 window/size/resizable=false
+window/size/fullscreen=true
+window/stretch/mode="2d"
+window/stretch/aspect="keep_width"
 
 [editor_plugins]
 
@@ -54,6 +57,8 @@ singletons=[ "res://addons/godot-git-plugin/git_api.gdnlib" ]
 
 monitor=false
 theme=false
+mouse=false
+font=false
 
 [input]
 

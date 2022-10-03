@@ -1,9 +1,11 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://game/player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://game/main.gd" type="Script" id=2]
-[ext_resource path="res://game/asteroids/AsteroidSpawner.gd" type="Script" id=3]
-[ext_resource path="res://assets/sfx/explosion_big.wav" type="AudioStream" id=4]
+[ext_resource path="res://game/asteroids/AsteroidSpawner.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/img/ship-0.png" type="Texture" id=4]
+[ext_resource path="res://game/HUD.gd" type="Script" id=5]
+[ext_resource path="res://assets/Pixeled.ttf" type="DynamicFontData" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 819, 28.3125 )
@@ -17,10 +19,39 @@ extents = Vector2( 41, 534.5 )
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 33.75, 565 )
 
-[sub_resource type="Curve2D" id=5]
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, -82.1979, -106.002, 0, 0, 0, 0, 1080.36, -79.2513, 0, 0, 0, 0, 1071.76, 691.557, 0, 0, 0, 0, -102.275, 697.502, 0, 0, 0, 0, -83.154, -106.002, 0, 0, 0, 0, -82.1979, -106.002 )
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Ship:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
 }
+
+[sub_resource type="Animation" id=6]
+resource_name = "blink"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/path = NodePath("Ship:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false, true ]
+}
+
+[sub_resource type="DynamicFont" id=7]
+font_data = ExtResource( 6 )
 
 [node name="Main" type="Node"]
 script = ExtResource( 2 )
@@ -33,47 +64,68 @@ color = Color( 0, 0, 0, 1 )
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 532, 316 )
 
-[node name="Initial" type="Position2D" parent="."]
-position = Vector2( 532, 319 )
+[node name="AsteroidSpawner" parent="." instance=ExtResource( 3 )]
 
-[node name="LimitTop" type="Area2D" parent="."]
+[node name="Limits" type="Node2D" parent="."]
+
+[node name="LimitTop" type="Area2D" parent="Limits"]
 position = Vector2( 288, -25 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LimitTop"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limits/LimitTop"]
 position = Vector2( 248, -262.312 )
 shape = SubResource( 1 )
 
-[node name="LimitBottom" type="Area2D" parent="."]
+[node name="LimitBottom" type="Area2D" parent="Limits"]
 position = Vector2( 285, 621 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LimitBottom"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limits/LimitBottom"]
 position = Vector2( 297.5, 179 )
 shape = SubResource( 2 )
 
-[node name="LimitLeft" type="Area2D" parent="."]
+[node name="LimitLeft" type="Area2D" parent="Limits"]
 position = Vector2( -300, 272 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LimitLeft"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limits/LimitLeft"]
 position = Vector2( 39, -21.5 )
 shape = SubResource( 4 )
 
-[node name="LimitRight" type="Area2D" parent="."]
+[node name="LimitRight" type="Area2D" parent="Limits"]
 position = Vector2( 1161, 318 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LimitRight"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limits/LimitRight"]
 position = Vector2( 190, -75 )
 shape = SubResource( 3 )
 
-[node name="AsteroidSpawner" type="Path2D" parent="."]
-position = Vector2( 1.97655, -0.00933123 )
-scale = Vector2( 1.04597, 1.00933 )
-curve = SubResource( 5 )
-script = ExtResource( 3 )
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="AsteroidSpawnLocation" type="PathFollow2D" parent="AsteroidSpawner"]
-position = Vector2( -49.6924, -63.3991 )
-rotation = 0.00269974
+[node name="HUD" type="Control" parent="CanvasLayer"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 5 )
 
-[node name="SFXExplosion" type="AudioStreamPlayer" parent="AsteroidSpawner"]
-stream = ExtResource( 4 )
-volume_db = -9.851
+[node name="Ship" type="TextureRect" parent="CanvasLayer/HUD"]
+modulate = Color( 0.784314, 0.784314, 0.784314, 1 )
+margin_left = 11.0
+margin_top = 10.0
+margin_right = 158.0
+margin_bottom = 68.0
+texture = ExtResource( 4 )
+stretch_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/HUD"]
+anims/RESET = SubResource( 5 )
+anims/blink = SubResource( 6 )
+
+[node name="BlinkTimer" type="Timer" parent="CanvasLayer/HUD"]
+
+[node name="GameTimer" type="Timer" parent="CanvasLayer/HUD"]
+
+[node name="Points" type="Label" parent="CanvasLayer/HUD"]
+margin_left = 511.0
+margin_top = 6.0
+margin_right = 551.0
+margin_bottom = 37.0
+custom_fonts/font = SubResource( 7 )
+text = "0"
+
+[connection signal="timeout" from="CanvasLayer/HUD/BlinkTimer" to="CanvasLayer/HUD" method="_on_Timer_timeout"]

@@ -42,6 +42,7 @@ custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Direction"
 
 [node name="Velocity" type="Label" parent="."]
+visible = false
 margin_left = -16.0
 margin_top = 39.0
 margin_right = 90.0
@@ -50,6 +51,7 @@ custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Speed"
 
 [node name="LifePoints" type="Label" parent="."]
+visible = false
 margin_left = 34.0
 margin_top = -15.0
 margin_right = 140.0

@@ -10,6 +10,7 @@ onready var window_height = get_viewport().size.y
 onready var window_width = get_viewport().size.x
 
 func _ready():
+# warning-ignore:return_value_discarded
 	connect('body_entered', self, '_on_body_entered')
 
 func _process(dt):

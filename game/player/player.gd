@@ -7,6 +7,7 @@ onready var loose_sound: AudioStreamPlayer2D = $SFXLoose
 onready var hit_sound: AudioStreamPlayer2D = $SFXHit
 
 signal player_died
+signal player_was_hit
 
 var life_points := 3
 var speed := 300
@@ -84,15 +85,17 @@ func shoot():
 # 	draw_line(from, corrected_dir, Color.yellow, 3)
 
 func _on_Player_area_entered(area: Area2D):
-	if area is Asteroid:
+	if !(area is Asteroid):
+		return
 #		print('PLAYER touched by ' + area.name)
-		life_points -= 1
-		hit_sound.play()
-		update_life_points()
-		if life_points == 0:
-			hide()
-			velocity = Vector2.ZERO
-			loose_sound.play()
-			emit_signal('player_died')
-			yield(loose_sound, 'finished')
-			queue_free()
+	life_points -= 1
+	emit_signal('player_was_hit')
+	hit_sound.play()
+	update_life_points()
+	if life_points == 0:
+		hide()
+		velocity = Vector2.ZERO
+		loose_sound.play()
+		emit_signal('player_died')
+		yield(loose_sound, 'finished')
+		queue_free()

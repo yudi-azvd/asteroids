@@ -26,7 +26,6 @@ func init(position: Vector2, direction_: Vector2):
 	rotation = randf() * 2 * PI
 	global_position = position
 	direction = direction_
-	print('direction ', direction)
 	linear_damp = 0
 	show()
 	
