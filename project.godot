@@ -59,6 +59,7 @@ monitor=false
 theme=false
 mouse=false
 font=false
+rcedit=false
 
 [input]
 

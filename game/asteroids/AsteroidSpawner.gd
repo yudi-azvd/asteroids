@@ -44,6 +44,7 @@ func spawn_asteroid(asteroid: Asteroid=null,has_direction_offset=true):
 	if has_direction_offset:
 		direction_to_center = direction_to_center.rotated(randf()*PI/6 - PI/4)
 	asteroid.init(asteroidSpawnLocation.position, direction_to_center)
+# warning-ignore:return_value_discarded
 	asteroid.connect('bullet_hit', self, '_on_bullet_hit')
 
 func _on_bullet_hit(asteroid_hit: Asteroid):
@@ -65,4 +66,5 @@ func spawn_asteroid_after_hit(asteroid: Asteroid, asteroid_hit: Asteroid):
 	self.call_deferred('add_child', asteroid)
 	asteroid.init(asteroid_hit.position, asteroid_hit.direction.rotated(rand_range(-PI/4, PI/4)))
 	asteroid.speed *= 1.1
+# warning-ignore:return_value_discarded
 	asteroid.connect('bullet_hit', self, '_on_bullet_hit')

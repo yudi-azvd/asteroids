@@ -13,6 +13,7 @@ var speed = 50
 var direction = Vector2.UP
 
 func _ready() -> void:
+# warning-ignore:return_value_discarded
 	connect('area_entered', self, '_on_Asteroid_area_entered')
 
 func _init():
